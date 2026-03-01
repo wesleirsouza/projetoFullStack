@@ -1,0 +1,43 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4 border-0" style="width: 100%; max-width: 600px; border-radius: 15px;">
+    <h3 class="text-center mb-4 fw-bold text-primary">
+      <i class="bi bi-person-plus-fill"></i> Login
+    </h3>
+    <form>
+      <div class="row mb-3">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Email</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light">
+            <i class="bi bi-envelope"></i>
+          </span>
+          <input type="email"
+            class="form-control"
+            placeholder="exemplo@email.com"
+            [(ngModel)]="newLogin.email"
+            name="email">
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Senha</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light">
+            <i class="bi bi-lock"></i>
+          </span>
+          <input type="password"
+            class="form-control"
+            placeholder="Digite sua senha"
+            [(ngModel)]="newLogin.password"
+            name="senha">
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-sm"
+          (click)="confirmLogin()">
+             LOGIN
+        </button>
+      </div>
+      </div>
+    </form>
+  </div>
+</div>
