@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.DTO.Parameter.LoginDTO;
 import com.example.backend.DTO.UserRequestDTO;
 import com.example.backend.DTO.UserResponseDTO;
 import com.example.backend.Mapper.UserMapper;
@@ -18,6 +19,15 @@ public class UserService {
         User user = UserMapper.toDomain(userRequestDTO);
         User newUser = userRepository.save(user);
         return UserMapper.toDTO(newUser);
+    }
+
+    public Boolean loginConfirm(LoginDTO loginDTO){
+        User user = userRepository.validationLogin(loginDTO.getEmail(), loginDTO.getPassword());
+        if(user == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }

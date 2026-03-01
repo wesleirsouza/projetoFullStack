@@ -1,9 +1,6 @@
 package com.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ public class User {
     private String name;
     private String surname;
     private Long telephone;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
 }
