@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interface/user/user';
 import { UserService } from '../../service/userService/user-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration',
@@ -10,6 +11,8 @@ import { UserService } from '../../service/userService/user-service';
   styleUrl: './user-registration.scss',
 })
 export class UserRegistration {
+
+  constructor(private router: Router) {}
 
   userService = inject(UserService);
 
@@ -21,11 +24,11 @@ export class UserRegistration {
     email: '',
     password: ''
   }
-
+  
   createUser(){
     this.userService.createUser(this.newUser).subscribe({
       next: (data : User) => {
-        console.log(data);
+        this.router.navigate(['/login']);
       }
     })
   }
