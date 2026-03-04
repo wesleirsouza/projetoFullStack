@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../service/userService/user-service';
 import { LoginInterface } from '../../interface/user/loginInterface';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +11,8 @@ import { RouterLink } from "@angular/router";
   styleUrl: './login.scss',
 })
 export class Login {
+  
+  constructor(private router: Router) {}
 
   userService = inject(UserService);
 
@@ -18,17 +20,16 @@ export class Login {
    email: '',
    password: ''
  }
-
+  
   confirmLogin(){
     this.userService.loginConfirm(this.newLogin).subscribe({
-      next: (response) => {
-        console.log("NEXT executado", response);
-        alert("Login realizado!");
-      },
-      error: (error: any) => {
-        console.log("ERROR executado", error);
-        alert("Erro detectado");
-      }
-    });
+      next: (response : any) => {
+        localStorage.setItem('token', response.token);
+      this.router.navigate(['/feed']);
+    },
+    error: () => {
+      alert("Login inválido");
+    }
+  });
   }
 }
