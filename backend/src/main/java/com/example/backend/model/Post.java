@@ -16,7 +16,8 @@ public class Post {
     private Long id;
     private String text;
     @Lob
-    @Column(name = "image_data")
+    @Column(name = "image_data", columnDefinition = "LONGBLOB"
+    )
     private byte[] imageData;
     @ManyToOne
     @JoinColumn(name = "user_id")
