@@ -1,7 +1,8 @@
 import { User } from "./user/user";
 
 export interface Post {
-    text : String | null;
-    imagem : File | null;
+    id : number | null;
     user : User | null;
+    text : string | null;
+    imagemData : string | null;
 }

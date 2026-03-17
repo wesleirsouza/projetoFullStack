@@ -10,8 +10,19 @@ export class PostService {
   private http = inject(HttpClient);
   private apiUrl = "http://localhost:8080/api/post";
 
-  public createPost(post : Post){
-    return this.http.post<Post>(this.apiUrl + '/create', post);
+  createPost(post: Post, file: File){
+
+  const formData = new FormData();
+
+  formData.append("text", post.text!);
+  formData.append("image", file);
+  formData.append("userId", String(2));
+
+  return this.http.post(this.apiUrl + "/create", formData);
+}
+
+  public findAll(){
+    return this.http.get<Post[]>(this.apiUrl + '/findAll');
   }
   
 }

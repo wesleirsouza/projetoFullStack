@@ -16,15 +16,40 @@ export class Feed {
   userService = inject(UserService);
 
   newPost : Post = {
+    id: null,
+    user: null,
     text: null,
-    imagem: null,
-    user: null
+    imagemData: null
   }
 
-  savePost(){
-    this.postService.createPost(this.newPost).subscribe({
-      next : (data : Post) =>{
-        console.log("Poste Salvo");
+  postFeed : Post[] = [];
+
+    ngOnInit(): void {
+    this.findAll();
+  }
+
+  selectedFile!: File;
+
+onFileSelected(event: any){
+  this.selectedFile = event.target.files[0];
+}
+
+savePost(){
+  this.postService.createPost(this.newPost, this.selectedFile)
+  .subscribe({
+    next: () => {
+      console.log("Post criado");
+      this.findAll();
+    }
+  });
+}
+ 
+
+  findAll(){
+    this.postService.findAll().subscribe({
+      next : (data : Post[]) => {
+       this.postFeed = data;
+       console.log(data)
       }
     })
   }
