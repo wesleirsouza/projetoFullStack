@@ -43,10 +43,10 @@
               {{ item.user }}
             </h6>
           </div>
-          <img 
-            [src]="item.imagemData"
-            class="card-img-top img-fluid"
-            style="max-height: 400px; object-fit: cover;">
+          @if (item.imageData) {
+            <img [src]="item.imageUrl" alt="Imagem Blob" />
+          }
+
           <div class="card-body">
             <p class="card-text fs-6">
               {{ item.text }}

@@ -4,5 +4,6 @@ export interface Post {
     id : number | null;
     user : User | null;
     text : string | null;
-    imagemData : string | null;
+    imageData : number[] | null;
+    imageUrl : string;
 }
