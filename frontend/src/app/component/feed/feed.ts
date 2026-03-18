@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Post } from '../../interface/post';
 import { PostService } from '../../service/postService/post-service';
 import { UserService } from '../../service/userService/user-service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-feed',
@@ -10,48 +11,75 @@ import { UserService } from '../../service/userService/user-service';
   templateUrl: './feed.html',
   styleUrl: './feed.scss',
 })
-export class Feed {
+export class Feed implements OnInit, OnDestroy {
 
   postService = inject(PostService);
   userService = inject(UserService);
 
-  newPost : Post = {
+  newPost: Post = {
     id: null,
     user: null,
     text: null,
-    imagemData: null
-  }
+    imageData: null,
+    imageUrl: ''
+  };
 
-  postFeed : Post[] = [];
-
-    ngOnInit(): void {
-    this.findAll();
-  }
+  postFeed: Post[] = [];
 
   selectedFile!: File;
 
-onFileSelected(event: any){
-  this.selectedFile = event.target.files[0];
-}
+  constructor(private http: HttpClient) {}
 
-savePost(){
-  this.postService.createPost(this.newPost, this.selectedFile)
-  .subscribe({
-    next: () => {
-      console.log("Post criado");
-      this.findAll();
-    }
-  });
-}
- 
-
-  findAll(){
-    this.postService.findAll().subscribe({
-      next : (data : Post[]) => {
-       this.postFeed = data;
-       console.log(data)
-      }
-    })
+  ngOnInit() {
+    this.findAll();
   }
 
+  
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  
+  savePost() {
+    this.postService.createPost(this.newPost, this.selectedFile)
+      .subscribe({
+        next: () => {
+          this.findAll();
+        }
+      });
+  }
+
+  
+  findAll() {
+    this.postService.findAll().subscribe({
+      next: (data: Post[]) => {
+
+        this.postFeed = data.map(post => {
+
+          if (post.imageData) {
+            const blob = new Blob(
+              [new Uint8Array(post.imageData)],
+                { type: 'image/png' }
+              );
+
+            const url = URL.createObjectURL(blob);
+            window.open(url);
+
+                     post.imageUrl = 'data:image/png;base64,' + post.imageData;
+          }
+
+           return post;
+          });
+      }
+    });
+  }
+
+  
+  ngOnDestroy() {
+    this.postFeed.forEach(post => {
+      if (post.imageUrl) {
+        URL.revokeObjectURL(post.imageUrl);
+      }
+    });
+  }
 }
