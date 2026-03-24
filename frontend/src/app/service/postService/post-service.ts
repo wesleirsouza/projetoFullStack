@@ -25,4 +25,7 @@ export class PostService {
     return this.http.get<Post[]>(this.apiUrl + '/findAll');
   }
   
+  public delete(id : number){
+    return this.http.delete(this.apiUrl + '/delete/' + id);
+  }
 }

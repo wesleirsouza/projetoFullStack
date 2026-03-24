@@ -63,7 +63,7 @@ export class Feed implements OnInit, OnDestroy {
               );
 
             const url = URL.createObjectURL(blob);
-            window.open(url);
+           
 
                      post.imageUrl = 'data:image/png;base64,' + post.imageData;
           }
@@ -74,6 +74,15 @@ export class Feed implements OnInit, OnDestroy {
     });
   }
 
+  deletePost(id : number){
+    this.postService.delete(id).subscribe({
+      next : ( ) =>{
+        this.ngOnInit();
+        this.closeModal();
+      }   
+    })
+  }
+
   
   ngOnDestroy() {
     this.postFeed.forEach(post => {
@@ -82,4 +91,14 @@ export class Feed implements OnInit, OnDestroy {
       }
     });
   }
+
+  selectedPost: any = null;
+
+openModal(post: any) {
+  this.selectedPost = post;
+}
+
+closeModal() {
+  this.selectedPost = null;
+}
 }

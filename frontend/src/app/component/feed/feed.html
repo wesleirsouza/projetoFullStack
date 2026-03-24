@@ -35,27 +35,44 @@
 
         </div>
       </div>
-      @for (item of postFeed; track item.id) {
-        <div class="card shadow-sm border-0 rounded-4 mb-4">
-          <div class="card-body pb-2">
-            <h6 class="fw-bold mb-0 text-dark">
-              <i class="bi bi-person-circle me-2"></i>
-              {{ item.user }}
-            </h6>
+     <div class="feed-container">
+        @for (item of postFeed; track item.id) {
+          <div class="feed-image" (click)="openModal(item)" >
+            <div class="feed-card">
+          <div class="feed-header">
+            <i class="bi bi-person-circle"></i>
+            <span>{{ item.user }}</span>
           </div>
           @if (item.imageData) {
-            <img [src]="item.imageUrl" alt="Imagem Blob" />
+            <div class="feed-image">
+              <img [src]="item.imageUrl" alt="Imagem" />
+            </div>
           }
-
-          <div class="card-body">
-            <p class="card-text fs-6">
-              {{ item.text }}
-            </p>
+          <div class="feed-body">
+            <p>{{ item.text }}</p>
           </div>
-
         </div>
+          </div>
       }
-
+      </div>
+</div>
     </div>
   </div>
-</div>
+@if (selectedPost) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <i class="bi bi-person-circle"></i>
+        <span>{{ selectedPost.user }}</span>
+      </div>
+      <div class="modal-image">
+        <img [src]="selectedPost.imageUrl" />
+      </div>
+      <div class="modal-body">
+        <p>{{ selectedPost.text }}</p>
+      </div>
+      <button (click)="deletePost(selectedPost.id)">Deletar</button>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+  </div>
+}
