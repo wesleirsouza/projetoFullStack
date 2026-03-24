@@ -1,9 +1,9 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Post;
-import com.example.backend.model.User;
 import com.example.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +33,13 @@ public class PostController {
     }
     @GetMapping("/findAll")
     public List<Post> findAll(){return postService.findAll();}
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        postService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }
