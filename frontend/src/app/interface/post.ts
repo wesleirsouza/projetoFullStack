@@ -6,4 +6,7 @@ export interface Post {
     text : string | null;
     imageData : number[] | null;
     imageUrl : string;
+    name : string;
+    surname : string;
+    
 }

@@ -21,7 +21,9 @@ export class Feed implements OnInit, OnDestroy {
     user: null,
     text: null,
     imageData: null,
-    imageUrl: ''
+    imageUrl: '',
+    name: '',
+    surname: ''
   };
 
   postFeed: Post[] = [];

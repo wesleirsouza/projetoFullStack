@@ -7,7 +7,7 @@
           <h2 class="text-center mb-4 text-primary fw-bold">
             ImagemShare
           </h2>
-
+            
           <div class="mb-3">
             <label class="form-label fw-semibold">Descrição</label>
             <input 
@@ -41,7 +41,7 @@
             <div class="feed-card">
           <div class="feed-header">
             <i class="bi bi-person-circle"></i>
-            <span>{{ item.user }}</span>
+            <span>{{item.name}} {{item.surname}} </span>
           </div>
           @if (item.imageData) {
             <div class="feed-image">
@@ -63,7 +63,7 @@
     <div class="modal-content" (click)="$event.stopPropagation()">
       <div class="modal-header">
         <i class="bi bi-person-circle"></i>
-        <span>{{ selectedPost.user }}</span>
+        <span>{{ selectedPost.name }} {{ selectedPost.surname }}</span>
       </div>
       <div class="modal-image">
         <img [src]="selectedPost.imageUrl" />

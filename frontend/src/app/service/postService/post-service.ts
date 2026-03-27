@@ -16,7 +16,12 @@ export class PostService {
 
   formData.append("text", post.text!);
   formData.append("image", file);
-  formData.append("userId", String(2));
+  const userId = localStorage.getItem('userId');
+    if (!userId) {
+     throw new Error("Usuário não autenticado");
+    }
+
+formData.append("userId", userId);
 
   return this.http.post(this.apiUrl + "/create", formData);
 }
