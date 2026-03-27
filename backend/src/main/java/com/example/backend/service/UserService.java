@@ -9,6 +9,8 @@ import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -21,13 +23,14 @@ public class UserService {
         return UserMapper.toDTO(newUser);
     }
 
-    public Boolean loginConfirm(LoginDTO loginDTO){
+    public UserResponseDTO loginConfirm(LoginDTO loginDTO){
         User user = userRepository.validationLogin(loginDTO.getEmail(), loginDTO.getPassword());
-        if(user == null){
-            return false;
-        }else{
-            return true;
-        }
+        return UserMapper.toDTO(user);
+    }
+
+    public User findUserById(Long userId){
+        Optional<User> user = userRepository.findById(userId);
+        return user.get();
     }
 
 }

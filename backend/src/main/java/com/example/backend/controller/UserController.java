@@ -22,13 +22,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginConfirm(@RequestBody LoginDTO loginDTO){
-        boolean isValid = userService.loginConfirm(loginDTO);
-
-        if(isValid){
-            return ResponseEntity.ok("Login realizado com sucesso");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Email ou senha inválidos");
-        }
+        UserResponseDTO userResponse= userService.loginConfirm(loginDTO);
+            return ResponseEntity.ok(userResponse);
     }
 }
