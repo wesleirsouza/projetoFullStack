@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Post } from '../../interface/post';
 import { PostService } from '../../service/postService/post-service';
@@ -30,10 +30,16 @@ export class Feed implements OnInit, OnDestroy {
 
   selectedFile!: File;
 
-  constructor(private http: HttpClient) {}
+  constructor(private cdr: ChangeDetectorRef) {}
+  //constructor(private http: HttpClient) {}
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   ngOnInit() {
     this.findAll();
+  }
+  clear(){
+    this.newPost.text ='';
+    this.fileInput.nativeElement.value = '';
   }
 
   
@@ -46,7 +52,8 @@ export class Feed implements OnInit, OnDestroy {
     this.postService.createPost(this.newPost, this.selectedFile)
       .subscribe({
         next: () => {
-          this.findAll();
+          this.ngOnInit();
+          this.clear();
         }
       });
   }
@@ -72,6 +79,7 @@ export class Feed implements OnInit, OnDestroy {
 
            return post;
           });
+          this.cdr.detectChanges();
       }
     });
   }

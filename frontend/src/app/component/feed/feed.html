@@ -20,7 +20,8 @@
           <div class="mb-4">
             <label class="form-label fw-semibold">Selecionar imagem</label>
             <input 
-              type="file" 
+              type="file"
+              #fileInput 
               class="form-control rounded-3"
               (change)="onFileSelected($event)">
           </div>
@@ -71,7 +72,7 @@
       <div class="modal-body">
         <p>{{ selectedPost.text }}</p>
       </div>
-      <button (click)="deletePost(selectedPost.id)">Deletar</button>
+      <button type="button" class="btn btn-danger" (click)="deletePost(selectedPost.id)">Deletar</button>
       <button class="close-btn" (click)="closeModal()">×</button>
     </div>
   </div>
